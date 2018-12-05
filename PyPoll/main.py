@@ -34,10 +34,12 @@ print("-----------------------")
 
 winner=""
 currentWinnerTotal=0
+runOff=""
 for candidates in range(len(candidatesWithVotes)):
     currentCandidate=candidatesWithVotes[candidates]
     currentCandidateTotal=allVotes.count(currentCandidate)
-    
+    if currentCandidateTotal==currentWinnerTotal:
+        runOff="WARNING - tied election - Runnoff Election Needed - WARNING"
     if currentCandidateTotal>currentWinnerTotal:
         currentWinnerTotal=currentCandidateTotal
         winner=currentCandidate
@@ -46,7 +48,10 @@ for candidates in range(len(candidatesWithVotes)):
     currentPercentage=(currentCandidateTotal/totalVotes)*100
     print(f"{currentCandidate}: {currentPercentage}% ({currentCandidateTotal})")
 print("-----------------------")
-print(f"Winner:  {winner}")
+if runOff=="":
+    print(f"Winner:  {winner}")
+else:
+    print(runOff)
 
 f= open("report.txt","w+")
 f.write("Election Results\n-----------------------\n")
@@ -66,5 +71,9 @@ for candidates in range(len(candidatesWithVotes)):
     currentPercentage=(currentCandidateTotal/totalVotes)*100
     f.write(f"{currentCandidate}: {currentPercentage}% ({currentCandidateTotal})\n")
 f.write("-----------------------\n")
-f.write(f"Winner:  {winner}")
+#f.write(f"Winner:  {winner}")
+if runOff=="":
+    f.write(f"Winner:  {winner}")
+else:
+    f.write(runOff)
 f.close() 
