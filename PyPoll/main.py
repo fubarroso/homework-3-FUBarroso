@@ -16,13 +16,14 @@ with open(csvpath, newline='') as csvfile:
 #close csv, working with allVotes list only
 totalVotes=len(allVotes)
 
-testCounter=0
+
 for votes in range(totalVotes):
-    #print(allVotes[votes])
+    
     
     currentVote=allVotes[votes]
     if currentVote in candidatesWithVotes:
-        testCounter=testCounter+1        
+        
+        continue
     else:
         candidatesWithVotes.append(allVotes[votes])
 
@@ -31,25 +32,39 @@ print("Election Results\n-----------------------")
 print(f"Total Votes: {totalVotes}")
 print("-----------------------")
 
-print("length of allVlotes")
-print(len(allVotes))
-print("length of candidatesWithVotes")
-print(len(candidatesWithVotes))
-
-print(testCounter)
-
-print(candidatesWithVotes[0])
-print(candidatesWithVotes[1])
-print(candidatesWithVotes[2])
-print(candidatesWithVotes[3])
-
-
-
+winner=""
+currentWinnerTotal=0
 for candidates in range(len(candidatesWithVotes)):
     currentCandidate=candidatesWithVotes[candidates]
-    print(allVotes.count(currentCandidate))
+    currentCandidateTotal=allVotes.count(currentCandidate)
+    
+    if currentCandidateTotal>currentWinnerTotal:
+        currentWinnerTotal=currentCandidateTotal
+        winner=currentCandidate
+    
+    
+    currentPercentage=(currentCandidateTotal/totalVotes)*100
+    print(f"{currentCandidate}: {currentPercentage}% ({currentCandidateTotal})")
+print("-----------------------")
+print(f"Winner:  {winner}")
 
-
-
-
-
+f= open("report.txt","w+")
+f.write("Election Results\n-----------------------\n")
+f.write(f"Total Votes: {totalVotes}\n")
+f.write("-----------------------\n")
+winner=""
+currentWinnerTotal=0
+for candidates in range(len(candidatesWithVotes)):
+    currentCandidate=candidatesWithVotes[candidates]
+    currentCandidateTotal=allVotes.count(currentCandidate)
+    
+    if currentCandidateTotal>currentWinnerTotal:
+        currentWinnerTotal=currentCandidateTotal
+        winner=currentCandidate
+    
+    
+    currentPercentage=(currentCandidateTotal/totalVotes)*100
+    f.write(f"{currentCandidate}: {currentPercentage}% ({currentCandidateTotal})\n")
+f.write("-----------------------\n")
+f.write(f"Winner:  {winner}")
+f.close() 
