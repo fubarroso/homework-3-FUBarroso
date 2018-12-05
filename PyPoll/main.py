@@ -16,7 +16,7 @@ with open(csvpath, newline='') as csvfile:
 #close csv, working with allVotes list only
 totalVotes=len(allVotes)
 
-
+#go through all the votes and create a list with candidates that received a vote or more
 for votes in range(totalVotes):
     
     
@@ -27,11 +27,11 @@ for votes in range(totalVotes):
     else:
         candidatesWithVotes.append(allVotes[votes])
 
-
+#print output titl
 print("Election Results\n-----------------------")
 print(f"Total Votes: {totalVotes}")
 print("-----------------------")
-
+#check for winner. If two winners prompt that a runoff election is needed
 winner=""
 currentWinnerTotal=0
 runOff=""
@@ -44,7 +44,7 @@ for candidates in range(len(candidatesWithVotes)):
         currentWinnerTotal=currentCandidateTotal
         winner=currentCandidate
     
-    
+    #print results
     currentPercentage=(currentCandidateTotal/totalVotes)*100
     print(f"{currentCandidate}: {currentPercentage}% ({currentCandidateTotal})")
 print("-----------------------")
